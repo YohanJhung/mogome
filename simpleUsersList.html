@@ -1,0 +1,69 @@
+﻿<div id="membersContainer" class="membersContainer user-list">
+
+    <!-- #section:pages/dashboard.members -->
+    <div class="clearfix">
+        <div class="itemdiv col-sm-3" ng-repeat="user in usersList.users">
+
+
+            <div class="user">
+                <span class="badge badge-warning badge-left">{{usersList.getItemNumber($index)}}</span>
+
+                <img ng-if="user.role.name == 'Client'"
+                     ng-class="{selected: usersList.isCurrentClient(user.userId)}"
+                     uib-tooltip="Designate as current client"
+                     ng-click="usersList.setNewClient(user.userId)"
+                     class="client-user"
+                     src="/assets/avatars/avatar6.png" />
+
+                <img ng-if="user.role.name != 'Client'"
+                     class="staff-user"
+                     src="/assets/avatars/avatar2.png" />
+
+            </div>
+
+            <div class="body">
+                <div class="name">
+                    <h5>
+                        {{user.firstName}} {{user.lastName}}
+                    </h5>
+                </div>
+
+                <div class="account">
+                    {{user.account.name}}
+                </div>
+
+                <div class="role">
+                    <a ng-if="usersList.$mogome.isAdmin() || usersList.$mogome.isSuperAdmin()"
+                       href="#"
+                       editable-select="user.role.name"
+                       e-ng-options="opt.name as opt.name for opt in usersList.roleOptions"
+                       onaftersave="usersList.updateUser(user)">
+                        {{user.role.name || 'NotSet'}}
+                    </a>
+
+                    <span ng-if="!usersList.$mogome.isAdmin() && !usersList.$mogome.isSuperAdmin()">
+                        {{user.role.name}}
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="space-4"></div>
+
+</div>
+
+<div class="paging">
+    <div class="well center">
+        <div paging
+             page="usersList.pager.pageIndex"
+             page-size="usersList.pager.pageSize"
+             total="usersList.pager.recordTotal"
+             show-prev-next="true"
+             show-first-last="true"
+             paging-action="usersList.getClickedPage(page)">
+        </div>
+    </div>
+</div>
