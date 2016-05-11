@@ -35,7 +35,7 @@ namespace MoGoMe.Web.Controllers.Api
         }
 
         [Route, HttpPost]
-        public HttpResponseMessage AddFile(FileAddRequest model)
+        public HttpResponseMessage Add(FileAddRequest model)
         {
             
             if (!ModelState.IsValid)
